@@ -15,6 +15,9 @@ S = "${WORKDIR}/kernel"
 
 PR = "r21.4.0"
 SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v4.0/source/kernel_src.tbz2 \
+           file://0001-kernel-add-support-for-gcc-5.patch \
+           file://0001-ARM-8158-1-LLVMLinux-use-static-inline-in-ARM-ftrace.patch \
+           file://gcc5.patch \
            file://defconfig"
 
 SRC_URI[md5sum] = "bf17f67bbb68cb296d37ff03fa9fde5e"
