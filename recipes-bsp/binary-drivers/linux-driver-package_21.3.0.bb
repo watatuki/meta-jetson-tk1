@@ -12,10 +12,10 @@ SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Te
 #           file://nv.conf \
 #           file://xorg.conf.add"
 
-SRC_URI[md5sum] = "5e875672c09451393e447169d3d97cc7"
-SRC_URI[sha256sum] = "0643f2eb3532eebbb066c75d5616f1d0014576f515062700347de9d799cf2e90"
+SRC_URI[md5sum] = "d56ffbf26db18e4a4a012a34293bb6c7"
+SRC_URI[sha256sum] = "2bf25de0d40a23ca38c96ade4e289e555037f54ed56aa158f5d7cddc93be89db"
 
-PR = "r2" 
+PR = "r3"
 
 DEPENDS = "virtual/libx11 alsa-lib libxext"
 
