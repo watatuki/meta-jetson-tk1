@@ -1,6 +1,6 @@
 DESCRIPTION = "NVIDIA Linux Driver Packages"
 HOMEPAGE = "https://developer.nvidia.com/"
-LICENSE = "CLOSED"
+LICENSE = "Proprietary"
 
 SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Tegra124_Linux_R21.3.0_armhf.tbz2 \
            file://ld.so.conf \
@@ -11,6 +11,8 @@ SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Te
 #           file://ld.so.conf \
 #           file://nv.conf \
 #           file://xorg.conf.add"
+
+LIC_FILES_CHKSUM = "file://nv_tegra/LICENSE;md5=60ad17cc726658e8cf73578bea47b85f"
 
 SRC_URI[md5sum] = "d56ffbf26db18e4a4a012a34293bb6c7"
 SRC_URI[sha256sum] = "2bf25de0d40a23ca38c96ade4e289e555037f54ed56aa158f5d7cddc93be89db"
@@ -23,7 +25,7 @@ INSANE_SKIP_${PN} = "ldflags"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-S = "${WORKDIR}/l4tdrv"
+S = "${WORKDIR}/Linux_for_Tegra"
 
 
 PACKAGES =+ "${PN}-firmware"
@@ -40,8 +42,9 @@ INHIBIT_PACKAGE_STRIP = "1"
 
 INSANE_SKIP_${PN} += "dev-so"
 
-do_compile () {
-    tar xjf ${WORKDIR}/Linux_for_Tegra/nv_tegra/config.tbz2 -C ${S}
+do_patch () {
+    mkdir -p ${WORKDIR}/l4tdrv
+    tar xjf ${WORKDIR}/Linux_for_Tegra/nv_tegra/config.tbz2 -C ${WORKDIR}/l4tdrv
 }
 
 do_install () {
@@ -49,11 +52,11 @@ do_install () {
     ln -sf ./libcuda.so.1.1 ${D}/usr/lib/arm-linux-gnueabihf/tegra/libcuda.so
     ln -sf ./arm-linux-gnueabihf/tegra/libcuda.so ${D}/usr/lib/libcuda.so
     ln -sf ./arm-linux-gnueabihf/tegra/libGL.so.1 ${D}/usr/lib/libGL.so
-    cp ${S}/etc/asound* ${D}/etc/
-    cp -r ${S}/etc/udev ${D}/etc/
+    cp ${WORKDIR}/l4tdrv/etc/asound* ${D}/etc/
+    cp -r ${WORKDIR}/l4tdrv/etc/udev ${D}/etc/
     mkdir ${D}/etc/X11/ 
-    cp ${S}/etc/X11/xorg.conf* ${D}/etc/X11/
-    cat ${S}/etc/X11/xorg.conf.jetson-tk1 ${WORKDIR}/xorg.conf.add > ${D}/etc/X11/xorg.conf.jetson-tk1
+    cp ${WORKDIR}/l4tdrv/etc/X11/xorg.conf* ${D}/etc/X11/
+    cat ${WORKDIR}/l4tdrv/etc/X11/xorg.conf.jetson-tk1 ${WORKDIR}/xorg.conf.add > ${D}/etc/X11/xorg.conf.jetson-tk1
     cp ${WORKDIR}/ld.so.conf ${D}/etc/
     mkdir ${D}/etc/init.d/
     mkdir ${D}/etc/rcS.d/
