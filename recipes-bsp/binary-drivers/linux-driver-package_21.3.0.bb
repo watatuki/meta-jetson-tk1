@@ -70,3 +70,23 @@ do_populate_sysroot () {
     mkdir ${WORKDIR}/sysroot-destdir/sysroot-providers
     touch ${WORKDIR}/sysroot-destdir/sysroot-providers/${PN}
 }
+
+# Function to add the relevant ABI dependency to drivers, which should be called# from a PACKAGEFUNC.
+def _add_xorg_abi_depends(d, name):
+    # Map of ABI names exposed in the dependencies to pkg-config variables
+    abis = {
+      "video": "abi_videodrv",
+      "input": "abi_xinput"
+    }
+
+    output = os.popen("pkg-config xorg-server --variable=%s" % abis[name]).read()
+    mlprefix = d.getVar('MLPREFIX', True) or ''
+    abi = "%sxorg-abi-%s-%s" % (mlprefix, name, output.split(".")[0])
+
+    pn = d.getVar("PN", True)
+    d.appendVar('RDEPENDS_' + pn, ' ' + abi)
+
+python add_xorg_abi_depends() {
+    _add_xorg_abi_depends(d, "video")
+}
+PACKAGEFUNCS =+ "add_xorg_abi_depends"
