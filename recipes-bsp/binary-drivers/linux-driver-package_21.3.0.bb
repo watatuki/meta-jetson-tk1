@@ -34,7 +34,7 @@ INSANE_SKIP_${PN}-dev = "ldflags"
 
 FILES_${PN} =  "${bindir}/* ${libdir}/* ${sysconfdir}/* ${sysconfdir}/*/*"
 RRECOMMENDS_${PN} = "xserver-xorg-module-libwfb"
-RDEPENDS_${PN} = "xserver-xorg"
+RDEPENDS_${PN} = "xserver-xorg bash"
 
 FILES_${PN}-firmware = "${base_libdir}/firmware/* ${base_libdir}/firmware/tegra12x/* "
 
