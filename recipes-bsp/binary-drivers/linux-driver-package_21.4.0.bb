@@ -2,7 +2,7 @@ DESCRIPTION = "NVIDIA Linux Driver Packages"
 HOMEPAGE = "https://developer.nvidia.com/"
 LICENSE = "Proprietary"
 
-SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Tegra124_Linux_R21.3.0_armhf.tbz2 \
+SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v4.0/Tegra124_Linux_R21.4.0_armhf.tbz2 \
            file://ld.so.conf \
            file://nv.conf \
            file://xorg.conf.add"
@@ -14,10 +14,10 @@ SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/Te
 
 LIC_FILES_CHKSUM = "file://nv_tegra/LICENSE;md5=60ad17cc726658e8cf73578bea47b85f"
 
-SRC_URI[md5sum] = "d56ffbf26db18e4a4a012a34293bb6c7"
-SRC_URI[sha256sum] = "2bf25de0d40a23ca38c96ade4e289e555037f54ed56aa158f5d7cddc93be89db"
+SRC_URI[md5sum] = "14e9ef046b578e6d769a6cddeccf2931"
+SRC_URI[sha256sum] = "f3539746e307751d0f6a0a9f827ae16a7514c5aeb95f43cc618a317aacb06f69"
 
-PR = "r3"
+PR = "r0"
 
 DEPENDS = "virtual/libx11 alsa-lib libxext"
 
