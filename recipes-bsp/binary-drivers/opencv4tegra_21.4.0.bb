@@ -11,7 +11,7 @@ SRC_URI[sha256sum] = "982c53f7a0825a721fa7ea919fec7386c3800d37c6fab2b991eeba6062
 
 PR = "r0"
 
-DEPENDS = "tiff zlib jpeg glib-2.0 python gtk+ "
+DEPENDS = "tiff zlib jpeg glib-2.0 python gtk+ libpng12 jasper libav9 cudatoolkit6.5 "
 
 INSANE_SKIP_${PN} = "ldflags"
 
