@@ -1,22 +1,22 @@
-From 3e0b4df055184b4e70b49855429acc0abae27f4c Mon Sep 17 00:00:00 2001
+From 0c99333b0e38ec48aa704ec18e8b11bcc9ec9ccd Mon Sep 17 00:00:00 2001
 From: Stefano Cordibella <stefano.cordibella@edalab.it>
-Date: Mon, 2 Nov 2015 08:39:18 +0100
+Date: Mon, 2 Nov 2015 16:45:24 +0100
 Subject: [PATCH] rename gstegl to gstnvegl
 
 ---
- gst-egl/ext/eglgles/Makefile.am                   |   2 +-
- gst-egl/ext/eglgles/Makefile.in                   |   2 +-
- gst-egl/ext/eglgles/libgsteglglessink.la          |   4 +-
- gst-egl/gst-libs/gst/egl/Makefile.am              |  34 +++----
- gst-egl/gst-libs/gst/egl/Makefile.in              | 104 +++++++++++-----------
- gst-egl/gst-plugins-bad.spec.in                   |   6 +-
- gst-egl/pkgconfig/gstreamer-egl-uninstalled.pc.in |   2 +-
+ ext/eglgles/Makefile.am                   |   2 +-
+ ext/eglgles/Makefile.in                   |   2 +-
+ ext/eglgles/libgsteglglessink.la          |   4 +-
+ gst-libs/gst/egl/Makefile.am              |  34 +++++-----
+ gst-libs/gst/egl/Makefile.in              | 104 +++++++++++++++---------------
+ gst-plugins-bad.spec.in                   |   6 +-
+ pkgconfig/gstreamer-egl-uninstalled.pc.in |   2 +-
  7 files changed, 77 insertions(+), 77 deletions(-)
 
-diff --git a/gst-egl/ext/eglgles/Makefile.am b/gst-egl/ext/eglgles/Makefile.am
+diff --git a/ext/eglgles/Makefile.am b/ext/eglgles/Makefile.am
 index afa78a8..87e336d 100644
---- a/gst-egl/ext/eglgles/Makefile.am
-+++ b/gst-egl/ext/eglgles/Makefile.am
+--- a/ext/eglgles/Makefile.am
++++ b/ext/eglgles/Makefile.am
 @@ -1,7 +1,7 @@
  plugin_LTLIBRARIES = libgstnveglglessink.la
  
@@ -26,10 +26,10 @@ index afa78a8..87e336d 100644
  
  libgstnveglglessink_la_SOURCES = gsteglglessink.c gstegladaptation.c $(DISTRO_SRC)
  
-diff --git a/gst-egl/ext/eglgles/Makefile.in b/gst-egl/ext/eglgles/Makefile.in
+diff --git a/ext/eglgles/Makefile.in b/ext/eglgles/Makefile.in
 index 1484b12..9c1ea74 100644
---- a/gst-egl/ext/eglgles/Makefile.in
-+++ b/gst-egl/ext/eglgles/Makefile.in
+--- a/ext/eglgles/Makefile.in
++++ b/ext/eglgles/Makefile.in
 @@ -517,7 +517,7 @@ top_builddir = @top_builddir@
  top_srcdir = @top_srcdir@
  plugin_LTLIBRARIES = libgstnveglglessink.la
@@ -39,10 +39,10 @@ index 1484b12..9c1ea74 100644
  libgstnveglglessink_la_SOURCES = gsteglglessink.c gstegladaptation.c $(DISTRO_SRC)
  libgstnveglglessink_la_CFLAGS = $(GST_PLUGINS_BAD_CFLAGS) \
  			      $(GST_PLUGINS_BASE_CFLAGS) \
-diff --git a/gst-egl/ext/eglgles/libgsteglglessink.la b/gst-egl/ext/eglgles/libgsteglglessink.la
+diff --git a/ext/eglgles/libgsteglglessink.la b/ext/eglgles/libgsteglglessink.la
 index 30d14ed..39b6912 100644
---- a/gst-egl/ext/eglgles/libgsteglglessink.la
-+++ b/gst-egl/ext/eglgles/libgsteglglessink.la
+--- a/ext/eglgles/libgsteglglessink.la
++++ b/ext/eglgles/libgsteglglessink.la
 @@ -17,7 +17,7 @@ old_library=''
  inherited_linker_flags=' -pthread'
  
@@ -58,10 +58,10 @@ index 30d14ed..39b6912 100644
  libdir='/usr/local/lib/gstreamer-1.0'
 -relink_command="(cd /home/ubuntu/gst-nveglglessink/ext/eglgles; /bin/bash /home/ubuntu/gst-nveglglessink/libtool  --silent --tag CC --tag CC --tag disable-static --mode=relink gcc -std=gnu99 -I../../gst-libs -I../../gst-libs -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -DGST_USE_UNSTABLE_API -DG_THREADS_MANDATORY -DG_DISABLE_CAST_CHECKS -DG_DISABLE_ASSERT -Wall -Wdeclaration-after-statement -Wvla -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wwrite-strings -Wformat-security -Wold-style-definition -Winit-self -Wmissing-include-dirs -Waddress -Wno-multichar -Wnested-externs -g -I/usr/include/libdrm -I/usr/include/libdrm -DUSE_EGL_TEGRA -g -O2 -module -avoid-version -export-symbols-regex \"^_*gst_plugin_.*\" -no-undefined -o libgsteglglessink.la -rpath /usr/local/lib/gstreamer-1.0 libgsteglglessink_la-gsteglglessink.lo libgsteglglessink_la-gstegladaptation.lo libgsteglglessink_la-gstegladaptation_egl.lo libgsteglglessink_la-video_platform_wrapper.lo -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lX11 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lGLESv2 -lgstvideo-1.0 ../../gst-libs/gst/egl/libgstegl-1.0.la @inst_prefix_dir@)"
 +relink_command="(cd /home/ubuntu/gst-nveglglessink/ext/eglgles; /bin/bash /home/ubuntu/gst-nveglglessink/libtool  --silent --tag CC --tag CC --tag disable-static --mode=relink gcc -std=gnu99 -I../../gst-libs -I../../gst-libs -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -DGST_USE_UNSTABLE_API -DG_THREADS_MANDATORY -DG_DISABLE_CAST_CHECKS -DG_DISABLE_ASSERT -Wall -Wdeclaration-after-statement -Wvla -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wwrite-strings -Wformat-security -Wold-style-definition -Winit-self -Wmissing-include-dirs -Waddress -Wno-multichar -Wnested-externs -g -I/usr/include/libdrm -I/usr/include/libdrm -DUSE_EGL_TEGRA -g -O2 -module -avoid-version -export-symbols-regex \"^_*gst_plugin_.*\" -no-undefined -o libgsteglglessink.la -rpath /usr/local/lib/gstreamer-1.0 libgsteglglessink_la-gsteglglessink.lo libgsteglglessink_la-gstegladaptation.lo libgsteglglessink_la-gstegladaptation_egl.lo libgsteglglessink_la-video_platform_wrapper.lo -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lX11 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lGLESv2 -lgstvideo-1.0 ../../gst-libs/gst/egl/libgstnvegl-1.0.la @inst_prefix_dir@)"
-diff --git a/gst-egl/gst-libs/gst/egl/Makefile.am b/gst-egl/gst-libs/gst/egl/Makefile.am
+diff --git a/gst-libs/gst/egl/Makefile.am b/gst-libs/gst/egl/Makefile.am
 index 66289c4..a4c33ea 100644
---- a/gst-egl/gst-libs/gst/egl/Makefile.am
-+++ b/gst-egl/gst-libs/gst/egl/Makefile.am
+--- a/gst-libs/gst/egl/Makefile.am
++++ b/gst-libs/gst/egl/Makefile.am
 @@ -1,25 +1,25 @@
 -lib_LTLIBRARIES = libgstegl-@GST_API_VERSION@.la
 +lib_LTLIBRARIES = libgstnvegl-@GST_API_VERSION@.la
@@ -144,10 +144,10 @@ index 66289c4..a4c33ea 100644
           $(built_headers) \
  	 -:PASSTHROUGH LOCAL_ARM_MODE:=arm \
  	> $@
-diff --git a/gst-egl/gst-libs/gst/egl/Makefile.in b/gst-egl/gst-libs/gst/egl/Makefile.in
+diff --git a/gst-libs/gst/egl/Makefile.in b/gst-libs/gst/egl/Makefile.in
 index dfa0d43..9e2235b 100644
---- a/gst-egl/gst-libs/gst/egl/Makefile.in
-+++ b/gst-egl/gst-libs/gst/egl/Makefile.in
+--- a/gst-libs/gst/egl/Makefile.in
++++ b/gst-libs/gst/egl/Makefile.in
 @@ -84,7 +84,7 @@ target_triplet = @target@
  subdir = gst-libs/gst/egl
  DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
@@ -413,10 +413,10 @@ index dfa0d43..9e2235b 100644
           $(built_headers) \
  	 -:PASSTHROUGH LOCAL_ARM_MODE:=arm \
  	> $@
-diff --git a/gst-egl/gst-plugins-bad.spec.in b/gst-egl/gst-plugins-bad.spec.in
+diff --git a/gst-plugins-bad.spec.in b/gst-plugins-bad.spec.in
 index 0a4f38d..8d3d0fc 100644
---- a/gst-egl/gst-plugins-bad.spec.in
-+++ b/gst-egl/gst-plugins-bad.spec.in
+--- a/gst-plugins-bad.spec.in
++++ b/gst-plugins-bad.spec.in
 @@ -278,9 +278,9 @@ make ERROR_CFLAGS='' ERROR_CXXFLAGS=''
  %{_libdir}/libgstbasecamerabinsrc-1.0.so
  %{_libdir}/libgstbasecamerabinsrc-1.0.so.0
@@ -430,10 +430,10 @@ index 0a4f38d..8d3d0fc 100644
  %{_libdir}/libgstmpegts-1.0.so
  %{_libdir}/libgstmpegts-1.0.so.0
  %{_libdir}/libgstmpegts-1.0.so.0.102.0
-diff --git a/gst-egl/pkgconfig/gstreamer-egl-uninstalled.pc.in b/gst-egl/pkgconfig/gstreamer-egl-uninstalled.pc.in
+diff --git a/pkgconfig/gstreamer-egl-uninstalled.pc.in b/pkgconfig/gstreamer-egl-uninstalled.pc.in
 index 525bda8..ae9d406 100644
---- a/gst-egl/pkgconfig/gstreamer-egl-uninstalled.pc.in
-+++ b/gst-egl/pkgconfig/gstreamer-egl-uninstalled.pc.in
+--- a/pkgconfig/gstreamer-egl-uninstalled.pc.in
++++ b/pkgconfig/gstreamer-egl-uninstalled.pc.in
 @@ -7,6 +7,6 @@ Name: GStreamer EGL, Uninstalled
  Description: GStreamer EGL Library, uninstalled
  Requires: gstreamer-@GST_API_VERSION@
