@@ -3,21 +3,27 @@ HOMEPAGE = "https://developer.nvidia.com/"
 LICENSE = "Proprietary"
 
 SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v4.0/Tegra124_Linux_R21.4.0_armhf.tbz2 \
-           file://ld.so.conf \
+           file://xorg.conf.add \
            file://nv \
-           file://xorg.conf.add"
-
-#SRC_URI = "file://Tegra124_Linux_R21.3.0_armhf.tbz2 \
-#           file://ld.so.conf \
-#           file://nv \
-#           file://xorg.conf.add"
+           file://nvfb \
+	   "
 
 LIC_FILES_CHKSUM = "file://nv_tegra/LICENSE;md5=60ad17cc726658e8cf73578bea47b85f"
 
 SRC_URI[md5sum] = "14e9ef046b578e6d769a6cddeccf2931"
 SRC_URI[sha256sum] = "f3539746e307751d0f6a0a9f827ae16a7514c5aeb95f43cc618a317aacb06f69"
 
-PR = "r1"
+PR = "r3"
+
+inherit update-rc.d
+
+INITSCRIPT_PACKAGES = "${PN}-boot ${PN}-firstboot"
+
+INITSCRIPT_NAME_${PN}-boot = "nv"
+INITSCRIPT_PARAMS_${PN}-boot = "start 41 S . "
+
+INITSCRIPT_NAME_${PN}-firstboot = "nvfb"
+INITSCRIPT_PARAMS_${PN}-firstboot = "start 40 S . "
 
 DEPENDS = "virtual/libx11 alsa-lib libxext"
 
@@ -28,7 +34,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 S = "${WORKDIR}/Linux_for_Tegra"
 
 
-PACKAGES =+ "${PN}-firmware"
+PACKAGES =+ "${PN}-firmware ${PN}-boot ${PN}-firstboot"
 
 INSANE_SKIP_${PN}-dev = "ldflags"
 
@@ -58,11 +64,13 @@ do_install () {
     mkdir ${D}/etc/X11/ 
     cp ${WORKDIR}/l4tdrv/etc/X11/xorg.conf* ${D}/etc/X11/
     cat ${WORKDIR}/l4tdrv/etc/X11/xorg.conf.jetson-tk1 ${WORKDIR}/xorg.conf.add > ${D}/etc/X11/xorg.conf.jetson-tk1
-    cp ${WORKDIR}/ld.so.conf ${D}/etc/
-    mkdir ${D}/etc/init.d/
-    mkdir ${D}/etc/rcS.d/
-    cp ${WORKDIR}/nv ${D}/etc/init.d
-    ln -s /etc/init.d/nv ${D}/etc/rcS.d/S40nv
+    
+    # install init scripts
+    install -d ${D}${sysconfdir}/init.d/
+    install -m 0755 ${WORKDIR}/nv ${D}${sysconfdir}/init.d/nv
+    install -m 0755 ${WORKDIR}/nvfb ${D}${sysconfdir}/init.d/nvfb
+    install -d ${D}${sysconfdir}/nv
+    touch ${D}${sysconfdir}/nv/nvfirstboot
 }
 
 do_populate_sysroot () {
@@ -81,3 +89,12 @@ python add_xorg_abi_depends() {
     d.appendVar('RDEPENDS_' + pn, ' ' + abi)
 }
 PACKAGEFUNCS =+ "add_xorg_abi_depends"
+
+FILES_${PN}-boot = " \
+	${sysconfdir}/init.d/nv \
+"
+
+FILES_${PN}-firstboot = "\
+	${sysconfdir}/init.d/nvfb \
+	${sysconfdir}/nv/nvfirstboot \
+"

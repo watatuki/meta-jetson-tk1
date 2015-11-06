@@ -1,0 +1,25 @@
+#!/bin/sh
+#"specific first-boot script"
+
+nvexec() {
+	RET=0
+	if [ ! -e /etc/nv/nvfirstboot ]; then
+		RET=0
+	else
+		echo "/usr/lib/arm-linux-gnueabihf/tegra" >> /etc/ld.so.conf
+		echo "/usr/lib/arm-linux-gnueabihf/tegra-egl" >> /etc/ld.so.conf
+
+		ldconfig
+		rm -rf /etc/nv/nvfirstboot
+	fi
+	exit $RET
+}
+
+case "$1" in
+  start)
+    nvexec
+    exit 0
+    ;;
+  *)
+    exit 1
+esac
