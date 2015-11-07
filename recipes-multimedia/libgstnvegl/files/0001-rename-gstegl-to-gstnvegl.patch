@@ -1,0 +1,447 @@
+From 0c99333b0e38ec48aa704ec18e8b11bcc9ec9ccd Mon Sep 17 00:00:00 2001
+From: Stefano Cordibella <stefano.cordibella@edalab.it>
+Date: Mon, 2 Nov 2015 16:45:24 +0100
+Subject: [PATCH] rename gstegl to gstnvegl
+
+---
+ ext/eglgles/Makefile.am                   |   2 +-
+ ext/eglgles/Makefile.in                   |   2 +-
+ ext/eglgles/libgsteglglessink.la          |   4 +-
+ gst-libs/gst/egl/Makefile.am              |  34 +++++-----
+ gst-libs/gst/egl/Makefile.in              | 104 +++++++++++++++---------------
+ gst-plugins-bad.spec.in                   |   6 +-
+ pkgconfig/gstreamer-egl-uninstalled.pc.in |   2 +-
+ 7 files changed, 77 insertions(+), 77 deletions(-)
+
+diff --git a/ext/eglgles/Makefile.am b/ext/eglgles/Makefile.am
+index afa78a8..87e336d 100644
+--- a/ext/eglgles/Makefile.am
++++ b/ext/eglgles/Makefile.am
+@@ -1,7 +1,7 @@
+ plugin_LTLIBRARIES = libgstnveglglessink.la
+ 
+ DISTRO_SRC = gstegladaptation_egl.c video_platform_wrapper.c
+-GST_EGL_LIBS = $(top_builddir)/gst-libs/gst/egl/libgstegl-$(GST_API_VERSION).la
++GST_EGL_LIBS = $(top_builddir)/gst-libs/gst/egl/libgstnvegl-$(GST_API_VERSION).la
+ 
+ libgstnveglglessink_la_SOURCES = gsteglglessink.c gstegladaptation.c $(DISTRO_SRC)
+ 
+diff --git a/ext/eglgles/Makefile.in b/ext/eglgles/Makefile.in
+index 1484b12..9c1ea74 100644
+--- a/ext/eglgles/Makefile.in
++++ b/ext/eglgles/Makefile.in
+@@ -517,7 +517,7 @@ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ plugin_LTLIBRARIES = libgstnveglglessink.la
+ DISTRO_SRC = gstegladaptation_egl.c video_platform_wrapper.c
+-GST_EGL_LIBS = $(top_builddir)/gst-libs/gst/egl/libgstegl-$(GST_API_VERSION).la
++GST_EGL_LIBS = $(top_builddir)/gst-libs/gst/egl/libgstnvegl-$(GST_API_VERSION).la
+ libgstnveglglessink_la_SOURCES = gsteglglessink.c gstegladaptation.c $(DISTRO_SRC)
+ libgstnveglglessink_la_CFLAGS = $(GST_PLUGINS_BAD_CFLAGS) \
+ 			      $(GST_PLUGINS_BASE_CFLAGS) \
+diff --git a/ext/eglgles/libgsteglglessink.la b/ext/eglgles/libgsteglglessink.la
+index 30d14ed..39b6912 100644
+--- a/ext/eglgles/libgsteglglessink.la
++++ b/ext/eglgles/libgsteglglessink.la
+@@ -17,7 +17,7 @@ old_library=''
+ inherited_linker_flags=' -pthread'
+ 
+ # Libraries that this one depends upon.
+-dependency_libs=' -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lGLESv2 /home/ubuntu/gst-nveglglessink/gst-libs/gst/egl/libgstegl-1.0.la /usr/lib/libgstvideo-1.0.la -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lEGL -lX11'
++dependency_libs=' -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lGLESv2 /home/ubuntu/gst-nveglglessink/gst-libs/gst/egl/libgstnvegl-1.0.la /usr/lib/libgstvideo-1.0.la -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lEGL -lX11'
+ 
+ # Names of additional weak libraries provided by this library
+ weak_library_names=''
+@@ -39,4 +39,4 @@ dlpreopen=''
+ 
+ # Directory that this library needs to be installed in:
+ libdir='/usr/local/lib/gstreamer-1.0'
+-relink_command="(cd /home/ubuntu/gst-nveglglessink/ext/eglgles; /bin/bash /home/ubuntu/gst-nveglglessink/libtool  --silent --tag CC --tag CC --tag disable-static --mode=relink gcc -std=gnu99 -I../../gst-libs -I../../gst-libs -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -DGST_USE_UNSTABLE_API -DG_THREADS_MANDATORY -DG_DISABLE_CAST_CHECKS -DG_DISABLE_ASSERT -Wall -Wdeclaration-after-statement -Wvla -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wwrite-strings -Wformat-security -Wold-style-definition -Winit-self -Wmissing-include-dirs -Waddress -Wno-multichar -Wnested-externs -g -I/usr/include/libdrm -I/usr/include/libdrm -DUSE_EGL_TEGRA -g -O2 -module -avoid-version -export-symbols-regex \"^_*gst_plugin_.*\" -no-undefined -o libgsteglglessink.la -rpath /usr/local/lib/gstreamer-1.0 libgsteglglessink_la-gsteglglessink.lo libgsteglglessink_la-gstegladaptation.lo libgsteglglessink_la-gstegladaptation_egl.lo libgsteglglessink_la-video_platform_wrapper.lo -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lX11 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lGLESv2 -lgstvideo-1.0 ../../gst-libs/gst/egl/libgstegl-1.0.la @inst_prefix_dir@)"
++relink_command="(cd /home/ubuntu/gst-nveglglessink/ext/eglgles; /bin/bash /home/ubuntu/gst-nveglglessink/libtool  --silent --tag CC --tag CC --tag disable-static --mode=relink gcc -std=gnu99 -I../../gst-libs -I../../gst-libs -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include -DGST_USE_UNSTABLE_API -DG_THREADS_MANDATORY -DG_DISABLE_CAST_CHECKS -DG_DISABLE_ASSERT -Wall -Wdeclaration-after-statement -Wvla -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wwrite-strings -Wformat-security -Wold-style-definition -Winit-self -Wmissing-include-dirs -Waddress -Wno-multichar -Wnested-externs -g -I/usr/include/libdrm -I/usr/include/libdrm -DUSE_EGL_TEGRA -g -O2 -module -avoid-version -export-symbols-regex \"^_*gst_plugin_.*\" -no-undefined -o libgsteglglessink.la -rpath /usr/local/lib/gstreamer-1.0 libgsteglglessink_la-gsteglglessink.lo libgsteglglessink_la-gstegladaptation.lo libgsteglglessink_la-gstegladaptation_egl.lo libgsteglglessink_la-video_platform_wrapper.lo -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lX11 -L/usr/lib/arm-linux-gnueabihf/tegra-egl -lEGL -lGLESv2 -lgstvideo-1.0 ../../gst-libs/gst/egl/libgstnvegl-1.0.la @inst_prefix_dir@)"
+diff --git a/gst-libs/gst/egl/Makefile.am b/gst-libs/gst/egl/Makefile.am
+index 66289c4..a4c33ea 100644
+--- a/gst-libs/gst/egl/Makefile.am
++++ b/gst-libs/gst/egl/Makefile.am
+@@ -1,25 +1,25 @@
+-lib_LTLIBRARIES = libgstegl-@GST_API_VERSION@.la
++lib_LTLIBRARIES = libgstnvegl-@GST_API_VERSION@.la
+ 
+-libgstegl_@GST_API_VERSION@_la_SOURCES = egl.c
++libgstnvegl_@GST_API_VERSION@_la_SOURCES = egl.c
+ 
+-libgstegl_@GST_API_VERSION@includedir = \
++libgstnvegl_@GST_API_VERSION@includedir = \
+ 	$(includedir)/gstreamer-@GST_API_VERSION@/gst/egl
+ 
+-libgstegl_@GST_API_VERSION@include_HEADERS = egl.h
++libgstnvegl_@GST_API_VERSION@include_HEADERS = egl.h
+ 
+-libgstegl_@GST_API_VERSION@_la_CFLAGS = \
++libgstnvegl_@GST_API_VERSION@_la_CFLAGS = \
+ 	$(GST_PLUGINS_BAD_CFLAGS) \
+ 	$(GST_PLUGINS_BASE_CFLAGS) \
+ 	$(GST_CFLAGS) \
+ 	$(EGL_CFLAGS) 
+ 
+-libgstegl_@GST_API_VERSION@_la_LIBADD = \
++libgstnvegl_@GST_API_VERSION@_la_LIBADD = \
+ 	$(GST_PLUGINS_BASE_LIBS) \
+ 	-lgstvideo-@GST_API_VERSION@ \
+ 	$(GST_LIBS) \
+ 	$(EGL_LIBS)
+ 
+-libgstegl_@GST_API_VERSION@_la_LDFLAGS = \
++libgstnvegl_@GST_API_VERSION@_la_LDFLAGS = \
+ 	$(GST_LIB_LDFLAGS) \
+ 	$(GST_ALL_LDFLAGS) \
+ 	$(GST_LT_LDFLAGS)
+@@ -28,12 +28,12 @@ libgstegl_@GST_API_VERSION@_la_LDFLAGS = \
+ if HAVE_INTROSPECTION
+ BUILT_GIRSOURCES = GstEGL-@GST_API_VERSION@.gir
+ 
+-gir_headers=$(patsubst %,$(srcdir)/%, $(libgstegl_@GST_API_VERSION@include_HEADERS))
++gir_headers=$(patsubst %,$(srcdir)/%, $(libgstnvegl_@GST_API_VERSION@include_HEADERS))
+ gir_headers+=$(patsubst %,$(builddir)/%, $(built_headers))
+-gir_sources=$(patsubst %,$(srcdir)/%, $(libgstegl_@GST_API_VERSION@_la_SOURCES))
++gir_sources=$(patsubst %,$(srcdir)/%, $(libgstnvegl_@GST_API_VERSION@_la_SOURCES))
+ gir_sources+=$(patsubst %,$(builddir)/%, $(built_sources))
+ 
+-GstEGL-@GST_API_VERSION@.gir: $(INTROSPECTION_SCANNER) libgstegl-@GST_API_VERSION@.la
++GstEGL-@GST_API_VERSION@.gir: $(INTROSPECTION_SCANNER) libgstnvegl-@GST_API_VERSION@.la
+ 	$(AM_V_GEN)PKG_CONFIG_PATH="$(GST_PKG_CONFIG_PATH)" \
+ 		GST_PLUGIN_SYSTEM_PATH_1_0="" GST_PLUGIN_PATH_1_0="" GST_REGISTRY_UPDATE=no \
+ 		$(INTROSPECTION_SCANNER) -v --namespace GstEGL \
+@@ -45,7 +45,7 @@ GstEGL-@GST_API_VERSION@.gir: $(INTROSPECTION_SCANNER) libgstegl-@GST_API_VERSIO
+ 		-I$(top_builddir)/gst-libs \
+ 		--add-include-path=`PKG_CONFIG_PATH="$(GST_PKG_CONFIG_PATH)" $(PKG_CONFIG) --variable=girdir gstreamer-@GST_API_VERSION@` \
+ 		--add-include-path=`PKG_CONFIG_PATH="$(GST_PKG_CONFIG_PATH)" $(PKG_CONFIG) --variable=girdir gstreamer-video-@GST_API_VERSION@` \
+-		--library=libgstegl-@GST_API_VERSION@.la \
++		--library=libgstnvegl-@GST_API_VERSION@.la \
+ 		--include=Gst-@GST_API_VERSION@ \
+ 		--libtool="$(top_builddir)/libtool" \
+ 		--pkg gstreamer-@GST_API_VERSION@ \
+@@ -79,17 +79,17 @@ CLEANFILES = $(BUILT_GIRSOURCES) $(typelibs_DATA)
+ endif
+ 
+ Android.mk:  $(BUILT_SOURCES) Makefile.am
+-	androgenizer -:PROJECT libgstegl -:STATIC libgstegl-@GST_API_VERSION@ \
++	androgenizer -:PROJECT libgstnvegl -:STATIC libgstnvegl-@GST_API_VERSION@ \
+ 	 -:TAGS eng debug \
+          -:REL_TOP $(top_srcdir) -:ABS_TOP $(abs_top_srcdir) \
+-	 -:SOURCES $(libgstegl_@GST_API_VERSION@_la_SOURCES) \
++	 -:SOURCES $(libgstnvegl_@GST_API_VERSION@_la_SOURCES) \
+          $(built_sources) \
+-	 -:CFLAGS $(DEFS) $(libgstegl_@GST_API_VERSION@_la_CFLAGS) \
+-	 -:LDFLAGS $(libgstegl_@GST_API_VERSION@_la_LDFLAGS) \
+-	           $(libgstegl@GST_API_VERSION@_la_LIBADD) \
++	 -:CFLAGS $(DEFS) $(libgstnvegl_@GST_API_VERSION@_la_CFLAGS) \
++	 -:LDFLAGS $(libgstnvegl_@GST_API_VERSION@_la_LDFLAGS) \
++	           $(libgstnvegl@GST_API_VERSION@_la_LIBADD) \
+ 	           -ldl \
+ 	 -:HEADER_TARGET gstreamer-@GST_API_VERSION@/gst/egl \
+-	 -:HEADERS $(libgsteglinclude_HEADERS) \
++	 -:HEADERS $(libgstnveglinclude_HEADERS) \
+          $(built_headers) \
+ 	 -:PASSTHROUGH LOCAL_ARM_MODE:=arm \
+ 	> $@
+diff --git a/gst-libs/gst/egl/Makefile.in b/gst-libs/gst/egl/Makefile.in
+index dfa0d43..9e2235b 100644
+--- a/gst-libs/gst/egl/Makefile.in
++++ b/gst-libs/gst/egl/Makefile.in
+@@ -84,7 +84,7 @@ target_triplet = @target@
+ subdir = gst-libs/gst/egl
+ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
+ 	$(top_srcdir)/depcomp \
+-	$(libgstegl_@GST_API_VERSION@include_HEADERS)
++	$(libgstnvegl_@GST_API_VERSION@include_HEADERS)
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = $(top_srcdir)/common/m4/as-ac-expand.m4 \
+ 	$(top_srcdir)/common/m4/as-auto-alt.m4 \
+@@ -153,23 +153,23 @@ am__uninstall_files_from_dir = { \
+   }
+ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(girdir)" \
+ 	"$(DESTDIR)$(typelibsdir)" \
+-	"$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)"
++	"$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)"
+ LTLIBRARIES = $(lib_LTLIBRARIES)
+ am__DEPENDENCIES_1 =
+-libgstegl_@GST_API_VERSION@_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
++libgstnvegl_@GST_API_VERSION@_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+ 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+-am_libgstegl_@GST_API_VERSION@_la_OBJECTS =  \
+-	libgstegl_@GST_API_VERSION@_la-egl.lo
+-libgstegl_@GST_API_VERSION@_la_OBJECTS =  \
+-	$(am_libgstegl_@GST_API_VERSION@_la_OBJECTS)
++am_libgstnvegl_@GST_API_VERSION@_la_OBJECTS =  \
++	libgstnvegl_@GST_API_VERSION@_la-egl.lo
++libgstnvegl_@GST_API_VERSION@_la_OBJECTS =  \
++	$(am_libgstnvegl_@GST_API_VERSION@_la_OBJECTS)
+ AM_V_lt = $(am__v_lt_@AM_V@)
+ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+ am__v_lt_0 = --silent
+ am__v_lt_1 = 
+-libgstegl_@GST_API_VERSION@_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
++libgstnvegl_@GST_API_VERSION@_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+ 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+-	$(libgstegl_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) \
+-	$(libgstegl_@GST_API_VERSION@_la_LDFLAGS) $(LDFLAGS) -o $@
++	$(libgstnvegl_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) \
++	$(libgstnvegl_@GST_API_VERSION@_la_LDFLAGS) $(LDFLAGS) -o $@
+ AM_V_P = $(am__v_P_@AM_V@)
+ am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
+ am__v_P_0 = false
+@@ -204,15 +204,15 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+ am__v_CCLD_0 = @echo "  CCLD    " $@;
+ am__v_CCLD_1 = 
+-SOURCES = $(libgstegl_@GST_API_VERSION@_la_SOURCES)
+-DIST_SOURCES = $(libgstegl_@GST_API_VERSION@_la_SOURCES)
++SOURCES = $(libgstnvegl_@GST_API_VERSION@_la_SOURCES)
++DIST_SOURCES = $(libgstnvegl_@GST_API_VERSION@_la_SOURCES)
+ am__can_run_installinfo = \
+   case $$AM_UPDATE_INFO_DIR in \
+     n|no|NO) false;; \
+     *) (install-info --version) >/dev/null 2>&1;; \
+   esac
+ DATA = $(gir_DATA) $(typelibs_DATA)
+-HEADERS = $(libgstegl_@GST_API_VERSION@include_HEADERS)
++HEADERS = $(libgstnvegl_@GST_API_VERSION@include_HEADERS)
+ am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ ACLOCAL = @ACLOCAL@
+@@ -499,36 +499,36 @@ target_vendor = @target_vendor@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-lib_LTLIBRARIES = libgstegl-@GST_API_VERSION@.la
+-libgstegl_@GST_API_VERSION@_la_SOURCES = egl.c
+-libgstegl_@GST_API_VERSION@includedir = \
++lib_LTLIBRARIES = libgstnvegl-@GST_API_VERSION@.la
++libgstnvegl_@GST_API_VERSION@_la_SOURCES = egl.c
++libgstnvegl_@GST_API_VERSION@includedir = \
+ 	$(includedir)/gstreamer-@GST_API_VERSION@/gst/egl
+ 
+-libgstegl_@GST_API_VERSION@include_HEADERS = egl.h
+-libgstegl_@GST_API_VERSION@_la_CFLAGS = \
++libgstnvegl_@GST_API_VERSION@include_HEADERS = egl.h
++libgstnvegl_@GST_API_VERSION@_la_CFLAGS = \
+ 	$(GST_PLUGINS_BAD_CFLAGS) \
+ 	$(GST_PLUGINS_BASE_CFLAGS) \
+ 	$(GST_CFLAGS) \
+ 	$(EGL_CFLAGS) 
+ 
+-libgstegl_@GST_API_VERSION@_la_LIBADD = \
++libgstnvegl_@GST_API_VERSION@_la_LIBADD = \
+ 	$(GST_PLUGINS_BASE_LIBS) \
+ 	-lgstvideo-@GST_API_VERSION@ \
+ 	$(GST_LIBS) \
+ 	$(EGL_LIBS)
+ 
+-libgstegl_@GST_API_VERSION@_la_LDFLAGS = \
++libgstnvegl_@GST_API_VERSION@_la_LDFLAGS = \
+ 	$(GST_LIB_LDFLAGS) \
+ 	$(GST_ALL_LDFLAGS) \
+ 	$(GST_LT_LDFLAGS)
+ 
+ @HAVE_INTROSPECTION_TRUE@BUILT_GIRSOURCES = GstEGL-@GST_API_VERSION@.gir
+ @HAVE_INTROSPECTION_TRUE@gir_headers = $(patsubst %,$(srcdir)/%, \
+-@HAVE_INTROSPECTION_TRUE@	$(libgstegl_@GST_API_VERSION@include_HEADERS)) \
++@HAVE_INTROSPECTION_TRUE@	$(libgstnvegl_@GST_API_VERSION@include_HEADERS)) \
+ @HAVE_INTROSPECTION_TRUE@	$(patsubst %,$(builddir)/%, \
+ @HAVE_INTROSPECTION_TRUE@	$(built_headers))
+ @HAVE_INTROSPECTION_TRUE@gir_sources = $(patsubst %,$(srcdir)/%, \
+-@HAVE_INTROSPECTION_TRUE@	$(libgstegl_@GST_API_VERSION@_la_SOURCES)) \
++@HAVE_INTROSPECTION_TRUE@	$(libgstnvegl_@GST_API_VERSION@_la_SOURCES)) \
+ @HAVE_INTROSPECTION_TRUE@	$(patsubst %,$(builddir)/%, \
+ @HAVE_INTROSPECTION_TRUE@	$(built_sources))
+ 
+@@ -609,8 +609,8 @@ clean-libLTLIBRARIES:
+ 	  rm -f $${locs}; \
+ 	}
+ 
+-libgstegl-@GST_API_VERSION@.la: $(libgstegl_@GST_API_VERSION@_la_OBJECTS) $(libgstegl_@GST_API_VERSION@_la_DEPENDENCIES) $(EXTRA_libgstegl_@GST_API_VERSION@_la_DEPENDENCIES) 
+-	$(AM_V_CCLD)$(libgstegl_@GST_API_VERSION@_la_LINK) -rpath $(libdir) $(libgstegl_@GST_API_VERSION@_la_OBJECTS) $(libgstegl_@GST_API_VERSION@_la_LIBADD) $(LIBS)
++libgstnvegl-@GST_API_VERSION@.la: $(libgstnvegl_@GST_API_VERSION@_la_OBJECTS) $(libgstnvegl_@GST_API_VERSION@_la_DEPENDENCIES) $(EXTRA_libgstnvegl_@GST_API_VERSION@_la_DEPENDENCIES) 
++	$(AM_V_CCLD)$(libgstnvegl_@GST_API_VERSION@_la_LINK) -rpath $(libdir) $(libgstnvegl_@GST_API_VERSION@_la_OBJECTS) $(libgstnvegl_@GST_API_VERSION@_la_LIBADD) $(LIBS)
+ 
+ mostlyclean-compile:
+ 	-rm -f *.$(OBJEXT)
+@@ -618,7 +618,7 @@ mostlyclean-compile:
+ distclean-compile:
+ 	-rm -f *.tab.c
+ 
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstegl_@GST_API_VERSION@_la-egl.Plo@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstnvegl_@GST_API_VERSION@_la-egl.Plo@am__quote@
+ 
+ .c.o:
+ @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@@ -644,12 +644,12 @@ distclean-compile:
+ @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+ @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+ 
+-libgstegl_@GST_API_VERSION@_la-egl.lo: egl.c
+-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstegl_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -MT libgstegl_@GST_API_VERSION@_la-egl.lo -MD -MP -MF $(DEPDIR)/libgstegl_@GST_API_VERSION@_la-egl.Tpo -c -o libgstegl_@GST_API_VERSION@_la-egl.lo `test -f 'egl.c' || echo '$(srcdir)/'`egl.c
+-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libgstegl_@GST_API_VERSION@_la-egl.Tpo $(DEPDIR)/libgstegl_@GST_API_VERSION@_la-egl.Plo
+-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='egl.c' object='libgstegl_@GST_API_VERSION@_la-egl.lo' libtool=yes @AMDEPBACKSLASH@
++libgstnvegl_@GST_API_VERSION@_la-egl.lo: egl.c
++@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstnvegl_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -MT libgstnvegl_@GST_API_VERSION@_la-egl.lo -MD -MP -MF $(DEPDIR)/libgstnvegl_@GST_API_VERSION@_la-egl.Tpo -c -o libgstnvegl_@GST_API_VERSION@_la-egl.lo `test -f 'egl.c' || echo '$(srcdir)/'`egl.c
++@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libgstnvegl_@GST_API_VERSION@_la-egl.Tpo $(DEPDIR)/libgstnvegl_@GST_API_VERSION@_la-egl.Plo
++@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='egl.c' object='libgstnvegl_@GST_API_VERSION@_la-egl.lo' libtool=yes @AMDEPBACKSLASH@
+ @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstegl_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o libgstegl_@GST_API_VERSION@_la-egl.lo `test -f 'egl.c' || echo '$(srcdir)/'`egl.c
++@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstnvegl_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o libgstnvegl_@GST_API_VERSION@_la-egl.lo `test -f 'egl.c' || echo '$(srcdir)/'`egl.c
+ 
+ mostlyclean-libtool:
+ 	-rm -f *.lo
+@@ -698,27 +698,27 @@ uninstall-typelibsDATA:
+ 	@list='$(typelibs_DATA)'; test -n "$(typelibsdir)" || list=; \
+ 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+ 	dir='$(DESTDIR)$(typelibsdir)'; $(am__uninstall_files_from_dir)
+-install-libgstegl_@GST_API_VERSION@includeHEADERS: $(libgstegl_@GST_API_VERSION@include_HEADERS)
++install-libgstnvegl_@GST_API_VERSION@includeHEADERS: $(libgstnvegl_@GST_API_VERSION@include_HEADERS)
+ 	@$(NORMAL_INSTALL)
+-	@list='$(libgstegl_@GST_API_VERSION@include_HEADERS)'; test -n "$(libgstegl_@GST_API_VERSION@includedir)" || list=; \
++	@list='$(libgstnvegl_@GST_API_VERSION@include_HEADERS)'; test -n "$(libgstnvegl_@GST_API_VERSION@includedir)" || list=; \
+ 	if test -n "$$list"; then \
+-	  echo " $(MKDIR_P) '$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)'"; \
+-	  $(MKDIR_P) "$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)" || exit 1; \
++	  echo " $(MKDIR_P) '$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)'"; \
++	  $(MKDIR_P) "$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)" || exit 1; \
+ 	fi; \
+ 	for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  echo "$$d$$p"; \
+ 	done | $(am__base_list) | \
+ 	while read files; do \
+-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)'"; \
+-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)" || exit $$?; \
++	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)'"; \
++	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)" || exit $$?; \
+ 	done
+ 
+-uninstall-libgstegl_@GST_API_VERSION@includeHEADERS:
++uninstall-libgstnvegl_@GST_API_VERSION@includeHEADERS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(libgstegl_@GST_API_VERSION@include_HEADERS)'; test -n "$(libgstegl_@GST_API_VERSION@includedir)" || list=; \
++	@list='$(libgstnvegl_@GST_API_VERSION@include_HEADERS)'; test -n "$(libgstnvegl_@GST_API_VERSION@includedir)" || list=; \
+ 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+-	dir='$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)'; $(am__uninstall_files_from_dir)
++	dir='$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)'; $(am__uninstall_files_from_dir)
+ tags TAGS:
+ 
+ ctags CTAGS:
+@@ -760,7 +760,7 @@ check-am: all-am
+ check: check-am
+ all-am: Makefile $(LTLIBRARIES) $(DATA) $(HEADERS)
+ installdirs:
+-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(girdir)" "$(DESTDIR)$(typelibsdir)" "$(DESTDIR)$(libgstegl_@GST_API_VERSION@includedir)"; do \
++	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(girdir)" "$(DESTDIR)$(typelibsdir)" "$(DESTDIR)$(libgstnvegl_@GST_API_VERSION@includedir)"; do \
+ 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+ 	done
+ install: install-am
+@@ -817,7 +817,7 @@ info: info-am
+ info-am:
+ 
+ install-data-am: install-girDATA \
+-	install-libgstegl_@GST_API_VERSION@includeHEADERS \
++	install-libgstnvegl_@GST_API_VERSION@includeHEADERS \
+ 	install-typelibsDATA
+ 
+ install-dvi: install-dvi-am
+@@ -865,7 +865,7 @@ ps: ps-am
+ ps-am:
+ 
+ uninstall-am: uninstall-girDATA uninstall-libLTLIBRARIES \
+-	uninstall-libgstegl_@GST_API_VERSION@includeHEADERS \
++	uninstall-libgstnvegl_@GST_API_VERSION@includeHEADERS \
+ 	uninstall-typelibsDATA
+ 
+ .MAKE: install-am install-strip
+@@ -878,7 +878,7 @@ uninstall-am: uninstall-girDATA uninstall-libLTLIBRARIES \
+ 	install-dvi-am install-exec install-exec-am install-girDATA \
+ 	install-html install-html-am install-info install-info-am \
+ 	install-libLTLIBRARIES \
+-	install-libgstegl_@GST_API_VERSION@includeHEADERS install-man \
++	install-libgstnvegl_@GST_API_VERSION@includeHEADERS install-man \
+ 	install-pdf install-pdf-am install-ps install-ps-am \
+ 	install-strip install-typelibsDATA installcheck \
+ 	installcheck-am installdirs maintainer-clean \
+@@ -886,11 +886,11 @@ uninstall-am: uninstall-girDATA uninstall-libLTLIBRARIES \
+ 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+ 	tags-am uninstall uninstall-am uninstall-girDATA \
+ 	uninstall-libLTLIBRARIES \
+-	uninstall-libgstegl_@GST_API_VERSION@includeHEADERS \
++	uninstall-libgstnvegl_@GST_API_VERSION@includeHEADERS \
+ 	uninstall-typelibsDATA
+ 
+ 
+-@HAVE_INTROSPECTION_TRUE@GstEGL-@GST_API_VERSION@.gir: $(INTROSPECTION_SCANNER) libgstegl-@GST_API_VERSION@.la
++@HAVE_INTROSPECTION_TRUE@GstEGL-@GST_API_VERSION@.gir: $(INTROSPECTION_SCANNER) libgstnvegl-@GST_API_VERSION@.la
+ @HAVE_INTROSPECTION_TRUE@	$(AM_V_GEN)PKG_CONFIG_PATH="$(GST_PKG_CONFIG_PATH)" \
+ @HAVE_INTROSPECTION_TRUE@		GST_PLUGIN_SYSTEM_PATH_1_0="" GST_PLUGIN_PATH_1_0="" GST_REGISTRY_UPDATE=no \
+ @HAVE_INTROSPECTION_TRUE@		$(INTROSPECTION_SCANNER) -v --namespace GstEGL \
+@@ -902,7 +902,7 @@ uninstall-am: uninstall-girDATA uninstall-libLTLIBRARIES \
+ @HAVE_INTROSPECTION_TRUE@		-I$(top_builddir)/gst-libs \
+ @HAVE_INTROSPECTION_TRUE@		--add-include-path=`PKG_CONFIG_PATH="$(GST_PKG_CONFIG_PATH)" $(PKG_CONFIG) --variable=girdir gstreamer-@GST_API_VERSION@` \
+ @HAVE_INTROSPECTION_TRUE@		--add-include-path=`PKG_CONFIG_PATH="$(GST_PKG_CONFIG_PATH)" $(PKG_CONFIG) --variable=girdir gstreamer-video-@GST_API_VERSION@` \
+-@HAVE_INTROSPECTION_TRUE@		--library=libgstegl-@GST_API_VERSION@.la \
++@HAVE_INTROSPECTION_TRUE@		--library=libgstnvegl-@GST_API_VERSION@.la \
+ @HAVE_INTROSPECTION_TRUE@		--include=Gst-@GST_API_VERSION@ \
+ @HAVE_INTROSPECTION_TRUE@		--libtool="$(top_builddir)/libtool" \
+ @HAVE_INTROSPECTION_TRUE@		--pkg gstreamer-@GST_API_VERSION@ \
+@@ -924,17 +924,17 @@ uninstall-am: uninstall-girDATA uninstall-libLTLIBRARIES \
+ @HAVE_INTROSPECTION_TRUE@		$(INTROSPECTION_COMPILER_OPTS) $< -o $(@F)
+ 
+ Android.mk:  $(BUILT_SOURCES) Makefile.am
+-	androgenizer -:PROJECT libgstegl -:STATIC libgstegl-@GST_API_VERSION@ \
++	androgenizer -:PROJECT libgstnvegl -:STATIC libgstnvegl-@GST_API_VERSION@ \
+ 	 -:TAGS eng debug \
+          -:REL_TOP $(top_srcdir) -:ABS_TOP $(abs_top_srcdir) \
+-	 -:SOURCES $(libgstegl_@GST_API_VERSION@_la_SOURCES) \
++	 -:SOURCES $(libgstnvegl_@GST_API_VERSION@_la_SOURCES) \
+          $(built_sources) \
+-	 -:CFLAGS $(DEFS) $(libgstegl_@GST_API_VERSION@_la_CFLAGS) \
+-	 -:LDFLAGS $(libgstegl_@GST_API_VERSION@_la_LDFLAGS) \
+-	           $(libgstegl@GST_API_VERSION@_la_LIBADD) \
++	 -:CFLAGS $(DEFS) $(libgstnvegl_@GST_API_VERSION@_la_CFLAGS) \
++	 -:LDFLAGS $(libgstnvegl_@GST_API_VERSION@_la_LDFLAGS) \
++	           $(libgstnvegl@GST_API_VERSION@_la_LIBADD) \
+ 	           -ldl \
+ 	 -:HEADER_TARGET gstreamer-@GST_API_VERSION@/gst/egl \
+-	 -:HEADERS $(libgsteglinclude_HEADERS) \
++	 -:HEADERS $(libgstnveglinclude_HEADERS) \
+          $(built_headers) \
+ 	 -:PASSTHROUGH LOCAL_ARM_MODE:=arm \
+ 	> $@
+diff --git a/gst-plugins-bad.spec.in b/gst-plugins-bad.spec.in
+index 0a4f38d..8d3d0fc 100644
+--- a/gst-plugins-bad.spec.in
++++ b/gst-plugins-bad.spec.in
+@@ -278,9 +278,9 @@ make ERROR_CFLAGS='' ERROR_CXXFLAGS=''
+ %{_libdir}/libgstbasecamerabinsrc-1.0.so
+ %{_libdir}/libgstbasecamerabinsrc-1.0.so.0
+ %{_libdir}/libgstbasecamerabinsrc-1.0.so.0.102.0
+-%{_libdir}/libgstegl-1.0.so
+-%{_libdir}/libgstegl-1.0.so.0
+-%{_libdir}/libgstegl-1.0.so.0.102.0
++%{_libdir}/libgstnvegl-1.0.so
++%{_libdir}/libgstnvegl-1.0.so.0
++%{_libdir}/libgstnvegl-1.0.so.0.102.0
+ %{_libdir}/libgstmpegts-1.0.so
+ %{_libdir}/libgstmpegts-1.0.so.0
+ %{_libdir}/libgstmpegts-1.0.so.0.102.0
+diff --git a/pkgconfig/gstreamer-egl-uninstalled.pc.in b/pkgconfig/gstreamer-egl-uninstalled.pc.in
+index 525bda8..ae9d406 100644
+--- a/pkgconfig/gstreamer-egl-uninstalled.pc.in
++++ b/pkgconfig/gstreamer-egl-uninstalled.pc.in
+@@ -7,6 +7,6 @@ Name: GStreamer EGL, Uninstalled
+ Description: GStreamer EGL Library, uninstalled
+ Requires: gstreamer-@GST_API_VERSION@
+ Version: @VERSION@
+-Libs: -L${libdir} ${libdir}/libgstegl-@GST_API_VERSION@.la @EGL_LIBS@
++Libs: -L${libdir} ${libdir}/libgstnvegl-@GST_API_VERSION@.la @EGL_LIBS@
+ Cflags: -I${includedir} @EGL_CFLAGS@
+ 
+-- 
+1.9.1
+
