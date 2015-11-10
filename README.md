@@ -1,5 +1,8 @@
 meta-jetson-tk1
 ===============
+This branch is not stable.
+Because of experimental branch.
+===============
 
 Yocto layer for the NVidia Tegra Jetson TK1 board.
 
