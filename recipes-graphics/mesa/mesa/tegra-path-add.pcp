@@ -1,48 +1,48 @@
 diff --git a/usr/lib/pkgconfig/egl.pc b/usr/lib/pkgconfig/egl.pc
-index 736911a..526ded5 100644
+index 1a817e5..a82163d 100644
 --- a/usr/lib/pkgconfig/egl.pc
 +++ b/usr/lib/pkgconfig/egl.pc
 @@ -7,6 +7,6 @@ Name: egl
  Description: Mesa EGL library
  Requires.private:  libdrm >= 2.4.38 x11 xext xdamage xfixes x11-xcb xcb xcb-glx >= 1.8.1 xcb-dri2 >= 1.8 xxf86vm
- Version: 10.4.4
+ Version: 10.6.3
 -Libs: -L${libdir} -lEGL
 +Libs: -L${libdir}/arm-linux-gnueabihf/tegra-egl -L${libdir} -lEGL
  Libs.private: -lm -lpthread -ldl
  Cflags: -I${includedir} 
 diff --git a/usr/lib/pkgconfig/gl.pc b/usr/lib/pkgconfig/gl.pc
-index 857edcf..f83e714 100644
+index c753814..20876c7 100644
 --- a/usr/lib/pkgconfig/gl.pc
 +++ b/usr/lib/pkgconfig/gl.pc
 @@ -7,7 +7,7 @@ Name: gl
  Description: Mesa OpenGL library
  Requires.private:  libdrm >= 2.4.38 x11 xext xdamage xfixes x11-xcb xcb xcb-glx >= 1.8.1 xcb-dri2 >= 1.8 xxf86vm
- Version: 10.4.4
+ Version: 10.6.3
 -Libs: -L${libdir} -lGL
-+Libs: -L${libdir}/arm-linux-gnueabihf/tegral -L${libdir} -lGL
++Libs: -L${libdir}/arm-linux-gnueabihf/tegra -L${libdir} -lGL
  Libs.private: -lm -lpthread -ldl
  Cflags: -I${includedir} 
  glx_tls: yes
 diff --git a/usr/lib/pkgconfig/glesv1_cm.pc b/usr/lib/pkgconfig/glesv1_cm.pc
-index 7dff347..69e67cd 100644
+index 0598afe..d7c36a5 100644
 --- a/usr/lib/pkgconfig/glesv1_cm.pc
 +++ b/usr/lib/pkgconfig/glesv1_cm.pc
 @@ -7,6 +7,6 @@ Name: glesv1_cm
  Description: Mesa OpenGL ES 1.1 CM library
  Requires.private:
- Version: 10.4.4
+ Version: 10.6.3
 -Libs: -L${libdir} -lGLESv1_CM
 +Libs: -L${libdir}/arm-linux-gnueabihf/tegra-egl -L${libdir} -lGLESv1_CM
  Libs.private: -lm -lpthread -ldl
  Cflags: -I${includedir}
 diff --git a/usr/lib/pkgconfig/glesv2.pc b/usr/lib/pkgconfig/glesv2.pc
-index 467a2b6..b230d17 100644
+index edd1b35..f06578b 100644
 --- a/usr/lib/pkgconfig/glesv2.pc
 +++ b/usr/lib/pkgconfig/glesv2.pc
 @@ -7,6 +7,6 @@ Name: glesv2
  Description: Mesa OpenGL ES 2.0 library
  Requires.private:
- Version: 10.4.4
+ Version: 10.6.3
 -Libs: -L${libdir} -lGLESv2
 +Libs: -L${libdir}/arm-linux-gnueabihf/tegra-egl -L${libdir} -lGLESv2
  Libs.private: -lm -lpthread -ldl
