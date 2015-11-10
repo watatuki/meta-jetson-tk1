@@ -19,7 +19,7 @@ index 857edcf..f83e714 100644
  Requires.private:  libdrm >= 2.4.38 x11 xext xdamage xfixes x11-xcb xcb xcb-glx >= 1.8.1 xcb-dri2 >= 1.8 xxf86vm
  Version: 10.4.4
 -Libs: -L${libdir} -lGL
-+Libs: -L${libdir}/arm-linux-gnueabihf/tegral -L${libdir} -lGL
++Libs: -L${libdir}/arm-linux-gnueabihf/tegra -L${libdir} -lGL
  Libs.private: -lm -lpthread -ldl
  Cflags: -I${includedir} 
  glx_tls: yes
