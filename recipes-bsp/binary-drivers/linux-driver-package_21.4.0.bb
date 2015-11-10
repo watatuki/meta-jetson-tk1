@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = "file://nv_tegra/LICENSE;md5=60ad17cc726658e8cf73578bea47b85f
 SRC_URI[md5sum] = "14e9ef046b578e6d769a6cddeccf2931"
 SRC_URI[sha256sum] = "f3539746e307751d0f6a0a9f827ae16a7514c5aeb95f43cc618a317aacb06f69"
 
-PR = "r3"
+PR = "r4"
 
 inherit update-rc.d
 
@@ -83,7 +83,7 @@ do_populate_sysroot () {
 # Function to add the relevant ABI dependency to drivers, which should be called# from a PACKAGEFUNC.
 python add_xorg_abi_depends() {
     mlprefix = d.getVar('MLPREFIX', True) or ''
-    abi = "%sxorg-abi-%s-%s" % (mlprefix, "video", "15")
+    abi = "%sxorg-abi-%s-%s" % (mlprefix, "video", "18")
 
     pn = d.getVar("PN", True)
     d.appendVar('RDEPENDS_' + pn, ' ' + abi)
