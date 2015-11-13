@@ -83,7 +83,7 @@ do_populate_sysroot () {
 # Function to add the relevant ABI dependency to drivers, which should be called# from a PACKAGEFUNC.
 python add_xorg_abi_depends() {
     mlprefix = d.getVar('MLPREFIX', True) or ''
-    abi = "%sxorg-abi-%s-%s" % (mlprefix, "video", "18")
+    abi = "%sxorg-abi-%s-%s" % (mlprefix, "video", "19")
 
     pn = d.getVar("PN", True)
     d.appendVar('RDEPENDS_' + pn, ' ' + abi)
