@@ -8,19 +8,25 @@ LICENSE = "GPLv3+ & SGIv1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504 \
                     file://COPYING.SGI;beginline=5;md5=269cdab4af6748677acce51d9aa13552"
 
-DEPENDS = "libpng12 jpeg virtual/libx11"
+DEPENDS = "libpng12 jpeg virtual/libx11 virtual/libgl "
 
 # depends on virtual/libx11
 REQUIRED_DISTRO_FEATURES = "x11"
 
-SRC_URI = "https://launchpad.net/${BPN}/trunk/${PV}/+download/${BP}.tar.gz"
+SRC_URI = "https://launchpad.net/glmark2/trunk/${PV}/+download/glmark2-${PV}.tar.gz \
+           file://nvjpeg.patch \
+           "
 
 SRC_URI[md5sum] = "739859cf57d4c8a23452c43e84f66e56"
 SRC_URI[sha256sum] = "bded41aaf918ce062d9b81e42cc5be943e6a80bc4ff9d046983b96102c3df6b5"
 
 inherit waf pkgconfig distro_features_check
 
-PACKAGECONFIG ?= "gl gles2"
+S = "${WORKDIR}/glmark2-${PV}"
+
+FILES_${PN} += " ${datadir}/glmark2/*/* "
+
+PACKAGECONFIG ?= "gl"
 
 PACKAGECONFIG[gl] = ",,virtual/libgl"
 PACKAGECONFIG[gles2] = ",,virtual/libgles2"
@@ -36,6 +42,6 @@ python __anonymous() {
         d.appendVar("EXTRA_OECONF", " --with-flavors=%s" % ",".join(flavors))
 }
 
-do_compile_prepend () {
-    LD="${LD} -L${STAGING_LIBDIR}/arm-linux-gnueabihf/tegra -L${STAGING_LIBDIR}/arm-linux-gnueabihf/tegra-egl"
-}
+#do_compile_prepend () {
+#    LD="${LD} -L${STAGING_LIBDIR}/arm-linux-gnueabihf/tegra -L${STAGING_LIBDIR}/arm-linux-gnueabihf/tegra-egl"
+#}
