@@ -1,3 +1,2 @@
-IMAGE_INSTALL += "mesa-demos glmark2"
-
+IMAGE_INSTALL += " mesa-demos glmark2-gl "
 
