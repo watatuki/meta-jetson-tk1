@@ -6,7 +6,7 @@ KERNEL_IMAGETYPE = "zImage"
 
 inherit kernel
 
-require recipes-kernel/linux/linux-dtb.inc
+require recipes-kernel/linux/linux-dtb-l4t.inc
 require recipes-kernel/linux/setup-defconfig.inc
 
 DEFAULT_PREFERENCE = "-1"
