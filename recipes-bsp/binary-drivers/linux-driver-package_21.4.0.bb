@@ -45,7 +45,7 @@ RDEPENDS_${PN} = "xserver-xorg bash"
 FILES_${PN}-firmware = "${base_libdir}/firmware/* ${base_libdir}/firmware/tegra12x/* "
 
 INHIBIT_PACKAGE_STRIP = "1"
-#INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 INSANE_SKIP_${PN} += "dev-so"
 
