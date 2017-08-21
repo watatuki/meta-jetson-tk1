@@ -1,0 +1,14 @@
+#
+# Copyright (c) 2016, NVIDIA CORPORATION.  All rights reserved.
+#
+
+[Unit]
+Description=NVIDIA specific first-boot script
+Before=xserver-nodm.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/nvfb start
+
+[Install]
+WantedBy=multi-user.target

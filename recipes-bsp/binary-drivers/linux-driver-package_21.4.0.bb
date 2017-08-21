@@ -6,6 +6,8 @@ SRC_URI = "http://developer.download.nvidia.com/embedded/L4T/r21_Release_v5.0/Te
            file://xorg.conf.add \
            file://nv \
            file://nvfb \
+           file://nv.service \
+           file://nvfb.service \
 	   "
 
 LIC_FILES_CHKSUM = "file://nv_tegra/LICENSE;md5=60ad17cc726658e8cf73578bea47b85f"
@@ -15,7 +17,7 @@ SRC_URI[sha256sum] = "a639e3e37e17ef11ea5754d7b703a133febdd6a5d3dd2e5b3924288930
 
 PR = "r5"
 
-inherit update-rc.d
+inherit update-rc.d systemd
 
 INITSCRIPT_PACKAGES = "${PN}-boot ${PN}-firstboot"
 
@@ -34,7 +36,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 S = "${WORKDIR}/Linux_for_Tegra"
 
 
-PACKAGES =+ "${PN}-firmware ${PN}-boot ${PN}-firstboot"
+PACKAGES =+ "${PN}-firmware ${PN}-boot ${PN}-firstboot "
 
 INSANE_SKIP_${PN}-dev = "ldflags"
 
@@ -65,10 +67,27 @@ do_install () {
     cp ${WORKDIR}/l4tdrv/etc/X11/xorg.conf* ${D}/etc/X11/
     cat ${WORKDIR}/l4tdrv/etc/X11/xorg.conf.jetson-tk1 ${WORKDIR}/xorg.conf.add > ${D}/etc/X11/xorg.conf.jetson-tk1
     
-    # install init scripts
-    install -d ${D}${sysconfdir}/init.d/
-    install -m 0755 ${WORKDIR}/nv ${D}${sysconfdir}/init.d/nv
-    install -m 0755 ${WORKDIR}/nvfb ${D}${sysconfdir}/init.d/nvfb
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+        # install systemd service
+        install -d ${D}${sysconfdir}/systemd/
+        install -d ${D}${sysconfdir}/systemd/system
+        
+        install -m 0755 ${WORKDIR}/nv ${D}${sysconfdir}/systemd/nv
+        install -m 0755 ${WORKDIR}/nvfb ${D}${sysconfdir}/systemd/nvfb
+
+        install -d ${D}/lib/
+        install -d ${D}/lib/systemd/
+        install -d ${D}/lib/systemd/system/
+
+        install -m 0644 ${WORKDIR}/nv.service ${D}${base_libdir}/systemd/system/
+        install -m 0644 ${WORKDIR}/nvfb.service ${D}${base_libdir}/systemd/system/
+    else
+        # install init scripts
+        install -d ${D}${sysconfdir}/init.d/
+        install -m 0755 ${WORKDIR}/nv ${D}${sysconfdir}/init.d/nv
+        install -m 0755 ${WORKDIR}/nvfb ${D}${sysconfdir}/init.d/nvfb
+    fi
+
     install -d ${D}${sysconfdir}/nv
     touch ${D}${sysconfdir}/nv/nvfirstboot
 }
@@ -92,9 +111,18 @@ PACKAGEFUNCS =+ "add_xorg_abi_depends"
 
 FILES_${PN}-boot = " \
 	${sysconfdir}/init.d/nv \
+	${sysconfdir}/systemd/nv    \
+	${base_libdir}/systemd/system/nv.service \
 "
 
 FILES_${PN}-firstboot = "\
 	${sysconfdir}/init.d/nvfb \
+	${sysconfdir}/systemd/nvfb    \
+	${base_libdir}/systemd/system/nvfb.service \
 	${sysconfdir}/nv/nvfirstboot \
 "
+
+SYSTEMD_PACKAGES = "${PN}-boot ${PN}-firstboot "
+SYSTEMD_SERVICE_${PN}-boot = "nv.service"
+SYSTEMD_SERVICE_${PN}-firstboot = "nvfb.service"
+

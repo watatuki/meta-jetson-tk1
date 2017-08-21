@@ -1,0 +1,14 @@
+#
+# Copyright (c) 2016, NVIDIA CORPORATION.  All rights reserved.
+#
+
+[Unit]
+Description=NVIDIA specific script
+Before=nvfb.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/nv start
+
+[Install]
+WantedBy=multi-user.target
