@@ -1,0 +1,164 @@
+diff --git a/arch/arm/mach-tegra/board-ardbeg.c b/arch/arm/mach-tegra/board-ardbeg.c
+old mode 100644
+new mode 100755
+index 46c4d3f..16b328a
+--- a/arch/arm/mach-tegra/board-ardbeg.c
++++ b/arch/arm/mach-tegra/board-ardbeg.c
+@@ -1156,15 +1156,16 @@ static int __init ardbeg_touch_init(void)
+ 			if (board_info.fab >= 0xa3) {
+ 				rm31080ts_t132loki_data.name_of_clock = NULL;
+ 				rm31080ts_t132loki_data.name_of_clock_con = NULL;
+-			} else
++			} else {
+ 				tegra_clk_init_from_table(touch_clk_init_table);
+-				rm31080a_ardbeg_spi_board[0].irq =
+-					gpio_to_irq(TOUCH_GPIO_IRQ_RAYDIUM_SPI);
+-				touch_init_raydium(TOUCH_GPIO_IRQ_RAYDIUM_SPI,
+-					TOUCH_GPIO_RST_RAYDIUM_SPI,
+-					&rm31080ts_t132loki_data,
+-					&rm31080a_ardbeg_spi_board[0],
+-					ARRAY_SIZE(rm31080a_ardbeg_spi_board));
++			}
++			rm31080a_ardbeg_spi_board[0].irq =
++				gpio_to_irq(TOUCH_GPIO_IRQ_RAYDIUM_SPI);
++			touch_init_raydium(TOUCH_GPIO_IRQ_RAYDIUM_SPI,
++				TOUCH_GPIO_RST_RAYDIUM_SPI,
++				&rm31080ts_t132loki_data,
++				&rm31080a_ardbeg_spi_board[0],
++				ARRAY_SIZE(rm31080a_ardbeg_spi_board));
+ 		} else if (board_info.board_id == BOARD_P1761) {
+ 			rm31080a_tn8_spi_board[0].irq =
+ 				gpio_to_irq(TOUCH_GPIO_IRQ_RAYDIUM_SPI);
+@@ -1470,10 +1471,10 @@ static void __init tegra_ardbeg_late_init(void)
+ 	else
+ 		ardbeg_panel_init();
+ 
+-		/* put PEX pads into DPD mode to save additional power */
+-		tegra_io_dpd_enable(&pexbias_io);
+-		tegra_io_dpd_enable(&pexclk1_io);
+-		tegra_io_dpd_enable(&pexclk2_io);
++	/* put PEX pads into DPD mode to save additional power */
++	tegra_io_dpd_enable(&pexbias_io);
++	tegra_io_dpd_enable(&pexclk1_io);
++	tegra_io_dpd_enable(&pexclk2_io);
+ 
+ 	if (board_info.board_id == BOARD_E2548 ||
+ 			board_info.board_id == BOARD_P2530)
+@@ -1605,11 +1606,6 @@ static const char * const bowmore_dt_board_compat[] = {
+ 	NULL
+ };
+ 
+-static const char * const loki_dt_board_compat[] = {
+-	"nvidia,t132loki",
+-	NULL
+-};
+-
+ static const char * const jetson_dt_board_compat[] = {
+ 	"nvidia,jetson-tk1",
+ 	NULL
+diff --git a/drivers/gpu/nvgpu/gk20a/mm_gk20a.c b/drivers/gpu/nvgpu/gk20a/mm_gk20a.c
+old mode 100644
+new mode 100755
+index f5e7767..d94755b
+--- a/drivers/gpu/nvgpu/gk20a/mm_gk20a.c
++++ b/drivers/gpu/nvgpu/gk20a/mm_gk20a.c
+@@ -121,7 +121,6 @@ static const u32 gmmu_page_sizes[gmmu_nr_page_sizes] = { SZ_4K, SZ_128K };
+ static const u32 gmmu_page_shifts[gmmu_nr_page_sizes] = { 12, 17 };
+ static const u64 gmmu_page_offset_masks[gmmu_nr_page_sizes] = { 0xfffLL,
+ 								0x1ffffLL };
+-static const u64 gmmu_page_masks[gmmu_nr_page_sizes] = { ~0xfffLL, ~0x1ffffLL };
+ 
+ struct gk20a_comptags {
+ 	u32 offset;
+diff --git a/drivers/gpu/nvgpu/gk20a/regops_gk20a.c b/drivers/gpu/nvgpu/gk20a/regops_gk20a.c
+old mode 100644
+new mode 100755
+index 231c32a..bb5f00c
+--- a/drivers/gpu/nvgpu/gk20a/regops_gk20a.c
++++ b/drivers/gpu/nvgpu/gk20a/regops_gk20a.c
+@@ -341,16 +341,6 @@ static const u32 gk20a_runcontrol_whitelist[] = {
+ static const u32 gk20a_runcontrol_whitelist_count =
+ 	ARRAY_SIZE(gk20a_runcontrol_whitelist);
+ 
+-static const struct regop_offset_range gk20a_runcontrol_whitelist_ranges[] = {
+-	{ 0x00419e10,   1 },
+-	{ 0x0041c610,   1 },
+-	{ 0x00501e10,   1 },
+-	{ 0x00504610,   1 },
+-};
+-static const u32 gk20a_runcontrol_whitelist_ranges_count =
+-	ARRAY_SIZE(gk20a_runcontrol_whitelist_ranges);
+-
+-
+ /* quad ctl */
+ static const u32 gk20a_qctl_whitelist[] = {
+ 	0x00504670,
+@@ -366,14 +356,6 @@ static const u32 gk20a_qctl_whitelist[] = {
+ static const u32 gk20a_qctl_whitelist_count =
+ 	ARRAY_SIZE(gk20a_qctl_whitelist);
+ 
+-static const struct regop_offset_range gk20a_qctl_whitelist_ranges[] = {
+-	{ 0x00504670,   1 },
+-	{ 0x00504730,   4 },
+-};
+-static const u32 gk20a_qctl_whitelist_ranges_count =
+-	ARRAY_SIZE(gk20a_qctl_whitelist_ranges);
+-
+-
+ 
+ 
+ static bool validate_reg_ops(struct dbg_session_gk20a *dbg_s,
+diff --git a/drivers/media/platform/tegra/ad5816.c b/drivers/media/platform/tegra/ad5816.c
+old mode 100644
+new mode 100755
+index d86ace7..ee8a812
+--- a/drivers/media/platform/tegra/ad5816.c
++++ b/drivers/media/platform/tegra/ad5816.c
+@@ -682,7 +682,7 @@ static int ad5816_param_wr(struct ad5816_info *info, unsigned long arg)
+ 					if (info->s_mode != NVC_SYNC_STEREO)
+ 						ad5816_pm_wr(info->s_info,
+ 						NVC_PWR_OFF);
+-						err = -EIO;
++					err = -EIO;
+ 				}
+ 			} else {
+ 				err = -EINVAL;
+diff --git a/drivers/media/platform/tegra/dw9718.c b/drivers/media/platform/tegra/dw9718.c
+old mode 100644
+new mode 100755
+index 6797e01..d89b31d
+--- a/drivers/media/platform/tegra/dw9718.c
++++ b/drivers/media/platform/tegra/dw9718.c
+@@ -627,7 +627,7 @@ static int dw9718_param_wr(struct dw9718_info *info, unsigned long arg)
+ 					if (info->s_mode != NVC_SYNC_STEREO)
+ 						dw9718_pm_wr(info->s_info,
+ 						NVC_PWR_OFF);
+-						err = -EIO;
++					err = -EIO;
+ 				}
+ 			} else {
+ 				err = -EINVAL;
+diff --git a/drivers/video/tegra/dc/dc.c b/drivers/video/tegra/dc/dc.c
+old mode 100644
+new mode 100755
+index 588ef13..175993f
+--- a/drivers/video/tegra/dc/dc.c
++++ b/drivers/video/tegra/dc/dc.c
+@@ -110,17 +110,6 @@ static struct device_dma_parameters tegra_dc_dma_parameters = {
+ 	.max_segment_size = UINT_MAX,
+ };
+ 
+-static const struct {
+-	bool h;
+-	bool v;
+-} can_filter[] = {
+-	/* Window A has no filtering */
+-	{ false, false },
+-	/* Window B has both H and V filtering */
+-	{ true,  true  },
+-	/* Window C has only H filtering */
+-	{ false, true  },
+-};
+ 
+ #ifdef CONFIG_TEGRA_DC_CMU
+ static struct tegra_dc_cmu default_cmu = {
