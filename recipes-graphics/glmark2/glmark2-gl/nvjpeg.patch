@@ -1,13 +1,15 @@
 diff --git a/src/wscript_build b/src/wscript_build
-index c0173c3..8a2cc42 100644
+old mode 100644
+new mode 100755
+index 9b24f8b..0c0ad94
 --- a/src/wscript_build
 +++ b/src/wscript_build
-@@ -52,7 +52,7 @@ for name in bld.env.keys():
-             source       = common_sources + flavor_sources[flavor],
+@@ -59,7 +59,7 @@ for name in bld.env.keys():
+             source       = flavor_sources[flavor],
              target       = target,
              use          = common_uselibs + flavor_uselibs[flavor],
 -            lib          = ['m', 'jpeg', 'dl'],
 +            lib          = ['m', 'jpeg', 'dl', 'nvddk_2d_v2', 'nvrm', 'nvddk_vic', 'nvrm_graphics', 'nvos'],
-             includes     = includes,
+             includes     = ['.'],
              defines      = common_defines + flavor_defines[flavor]
              )

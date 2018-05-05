@@ -8,21 +8,20 @@ LICENSE = "GPLv3+ & SGIv1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504 \
                     file://COPYING.SGI;beginline=5;md5=269cdab4af6748677acce51d9aa13552"
 
-DEPENDS = "libpng12 jpeg virtual/libx11 virtual/libgl "
+DEPENDS = "libpng jpeg virtual/libx11 virtual/libgl "
 
 # depends on virtual/libx11
 REQUIRED_DISTRO_FEATURES = "x11"
 
-SRC_URI = "https://launchpad.net/glmark2/trunk/${PV}/+download/glmark2-${PV}.tar.gz \
+SRC_URI = "git://github.com/glmark2/glmark2.git;procol=git \
            file://nvjpeg.patch \
            "
 
-SRC_URI[md5sum] = "739859cf57d4c8a23452c43e84f66e56"
-SRC_URI[sha256sum] = "bded41aaf918ce062d9b81e42cc5be943e6a80bc4ff9d046983b96102c3df6b5"
+SRCREV = "9c37ce30bf494c667a585c9840308e1514e23f65"
 
 inherit waf pkgconfig distro_features_check
 
-S = "${WORKDIR}/glmark2-${PV}"
+S = "${WORKDIR}/git"
 
 FILES_${PN} += " ${datadir}/glmark2/*/* "
 
