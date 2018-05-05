@@ -1,9 +1,7 @@
 require recipes-graphics/xorg-xserver/xserver-xorg.inc
 
-SRC_URI += "file://0001-use-__GLIBC__-guard-for-glibc-specific-code.patch \
-           "
-SRC_URI[md5sum] = "397e405566651150490ff493e463f1ad"
-SRC_URI[sha256sum] = "f61120612728f2c5034671d0ca3e2273438c60aba93b3dda4a8aa40e6a257993"
+SRC_URI[md5sum] = "1509a9daae713895e7f5bcba8bcc05b2"
+SRC_URI[sha256sum] = "0c4b45c116a812a996eb432d8508cf26c2ec8c3916ff2a50781796882f8d6457"
 
 # These extensions are now integrated into the server, so declare the migration
 # path for in-place upgrades.
