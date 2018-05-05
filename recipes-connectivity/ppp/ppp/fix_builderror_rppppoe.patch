@@ -1,0 +1,12 @@
+diff --git a/pppd/plugins/rp-pppoe/plugin.c b/pppd/plugins/rp-pppoe/plugin.c
+index a8c2bb4..87a3dfe 100755
+--- a/pppd/plugins/rp-pppoe/plugin.c
++++ b/pppd/plugins/rp-pppoe/plugin.c
+@@ -49,6 +49,7 @@ static char const RCSID[] =
+ #include <net/ethernet.h>
+ #include <net/if_arp.h>
+ #include <linux/ppp_defs.h>
++#include <linux/in6.h>
+ #include <linux/if_pppox.h>
+ 
+ #ifndef _ROOT_PATH
